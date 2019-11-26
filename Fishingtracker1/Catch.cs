@@ -5,20 +5,33 @@ using System.IO;
 
 namespace Fishingtracker1
 {
+   
     class Catch
     {
+        List<Catch> saaliit = new List<Catch>();
+
         private string _fish;
         private int _weight;
         private int _lenght;
-        static int _count;
+        static int _fishCount;
 
-        public Catch(string fish, int weight, int lenght)
+        public Catch(string fish, int weight, int lenght, DateTime fishtime) // ei toimi
         {
 
             _fish = fish;
-            _weight = weight;
+
+            if (_weight < 0 && _weight > 50)
+            {
+                _weight = weight;
+            }
+            else
+            {
+                Console.WriteLine("Invalid weight");
+            }
+            
             _lenght = lenght;
-            _count++;
+
+            _fishCount++;
         }
         public string GetFishSpecies()
         {
@@ -34,7 +47,28 @@ namespace Fishingtracker1
         }
         public int GetFishCount()
         {
-            return _count;
+            return _fishCount;
         }
+        public void SetFishWeight(int setFishWeight)
+        {
+            if (_weight < 0 || _weight > 50)
+            {
+                _weight = setFishWeight;
+            }
+            else
+            {
+                Console.WriteLine("Invalid weight");
+            }
+        }
+        public void SetCatch(Catch sessionCatch)
+          {
+              saaliit.Add(sessionCatch);
+         }
+        
+       public Catch GetCatch()
+       {
+             return saaliit[0];
+          }
+
     }
 }

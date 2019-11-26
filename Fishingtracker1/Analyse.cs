@@ -6,5 +6,10 @@ namespace Fishingtracker1
 {
     class Analyse
     {
+        public static void TripFishinhTime ()
+        {
+           
+
+        }
     }
 }

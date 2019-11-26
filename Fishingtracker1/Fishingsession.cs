@@ -6,9 +6,12 @@ namespace Fishingtracker1
 {
     class Fishingsession
     {
+       // List<Fishingsession> kalastussuoritus = new List<Fishingsession>();
+
         private String _lureName;
         private String _lureType;
         private String _fishingStyle;
+        private int _sessionCount;
 
 
         private DateTime _sessionStartTime;
@@ -20,6 +23,8 @@ namespace Fishingtracker1
             _lureType = lureType;
             _fishingStyle = fishingStyle;
             _sessionStartTime = sessionStartTime;
+
+            _sessionCount++;
         }
         public string GetLureName()
         {
@@ -49,5 +54,21 @@ namespace Fishingtracker1
         {
             return _sessionEndTime;
         }
+        public int GetSessionCount()
+        {
+            return _sessionCount;
+        }
+
+    //    public void SetSession(Fishingsession session)
+     //   {
+    //        kalastussuoritus.Add(session);
+    //    }
+
+     //   public Fishingsession GetSession()
+      //  {
+      //      return kalastussuoritus[0];
+       // }
+       
+
     }
 }
