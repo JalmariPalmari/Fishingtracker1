@@ -5,7 +5,7 @@ using System.Text;
 namespace Fishingtracker1
 {
 
-    // Geneerinen lista session
+    // Geneerinen lista?
     class Fishingtrip
     {
        // private List<Fishingtrip> kalastusmatka = new List<Fishingtrip>();

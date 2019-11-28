@@ -2,25 +2,29 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace Fishingtracker1
 {
    
     class Catch
     {
-        List<Catch> saaliit = new List<Catch>();
+       // List<Catch> saaliit = new List<Catch>();
 
         private string _fish;
         private int _weight;
         private int _lenght;
         static int _fishCount;
+        
 
+     static private List<int> kgsumma = new List<int>();
+    private int _kgSumma = kgsumma.Sum();
         public Catch(string fish, int weight, int lenght, DateTime fishtime) // ei toimi
         {
 
             _fish = fish;
 
-            if (_weight < 0 && _weight > 50)
+            if (weight > 0 && weight < 50)
             {
                 _weight = weight;
             }
@@ -28,9 +32,8 @@ namespace Fishingtracker1
             {
                 Console.WriteLine("Invalid weight");
             }
-            
+            kgsumma.Add(_weight);
             _lenght = lenght;
-
             _fishCount++;
         }
         public string GetFishSpecies()
@@ -49,26 +52,21 @@ namespace Fishingtracker1
         {
             return _fishCount;
         }
-        public void SetFishWeight(int setFishWeight)
+        public int GetWeightSum()
         {
-            if (_weight < 0 || _weight > 50)
-            {
-                _weight = setFishWeight;
-            }
-            else
-            {
-                Console.WriteLine("Invalid weight");
-            }
+            return _kgSumma;
         }
-        public void SetCatch(Catch sessionCatch)
-          {
-              saaliit.Add(sessionCatch);
-         }
+       
+      
+     //   public void SetCatch(Catch sessionCatch)
+      //    {
+     //         saaliit.Add(sessionCatch);
+     //    }
         
-       public Catch GetCatch()
-       {
-             return saaliit[0];
-          }
+    //   public Catch GetCatch()
+    //   {
+     //        return saaliit[0];
+     //     }
 
     }
 }
