@@ -4,11 +4,7 @@ using System.Text;
 
 namespace Fishingtracker1
 {
-    class Analyse
+    class Lure
     {
-        public static void TripFishingTime()
-        {
-          
-        }
     }
 }

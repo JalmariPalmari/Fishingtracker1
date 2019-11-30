@@ -1,37 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Npgsql;
-using System.Linq;
 
 namespace Fishingtracker1
 {
     class Program
     {
-        
+
         static async System.Threading.Tasks.Task Main(string[] args)
         {
-            // Luodaan tietokantayhteys
-            string connection = "Host=localhost;Username=postgres;Password=Postg09?;Database=fishing_tracker";
+            //// Luodaan tietokantayhteys
+            //string connection = "Host=localhost;Username=postgres;Password=;Database=fishing_tracker";
 
-           var conn = new NpgsqlConnection(connection);
-           conn.Open();
+            //var conn = new NpgsqlConnection(connection);
+            //conn.Open();
 
-            // Insert some data
-           using (var cmd = new NpgsqlCommand("INSERT INTO fish(species) VALUES ('Särki')", conn))
+            //// Insert some data
+            //using (var cmd = new NpgsqlCommand("INSERT INTO fish(species) VALUES ('Särki')", conn))
 
-            {
-                
-                await cmd.ExecuteNonQueryAsync();
-            }
+            //{
 
-            // Retrieve all rows
-            using (var cmd = new NpgsqlCommand("SELECT id_fish, species FROM fish", conn))
-            using (var reader = await cmd.ExecuteReaderAsync())
-                while (await reader.ReadAsync())
-                    Console.WriteLine(reader.GetString(1));
-            
+            //    await cmd.ExecuteNonQueryAsync();
+            //}
 
+            //// Retrieve all rows
+            //using (var cmd = new NpgsqlCommand("SELECT id_fish, species FROM fish", conn))
+            //using (var reader = await cmd.ExecuteReaderAsync())
+            //    while (await reader.ReadAsync())
+            //        Console.WriteLine(reader.GetString(1));
+
+            //jdhfkj
 
 
 
@@ -55,7 +52,7 @@ namespace Fishingtracker1
                     switch (komento)
                     {
                         case "m": // aloitetaan kalastus ja lisätään kalastusmatkan tiedot
-                            
+
                             Console.WriteLine("Anna kalastusmatkan tiedot");
                             Console.WriteLine("-----------------------------------------------");
                             Console.Write("Paikka: ");
@@ -67,12 +64,12 @@ namespace Fishingtracker1
                             bool valinta = true;
                             do
                             {
-                            // Ohjelma kysyy käyttäjältä onko kalastusmatka kisa? Ohjelma tarkistaa syötetyn arvon, että se on oikein.
+                                // Ohjelma kysyy käyttäjältä onko kalastusmatka kisa? Ohjelma tarkistaa syötetyn arvon, että se on oikein.
                                 Console.Write("Onko kalastusmatka kisa? Kyllä/Ei: ");
                                 String vastaus = Console.ReadLine();
                                 if (vastaus == "Kyllä")
                                 {
-                                    
+
                                     Console.WriteLine("Kalastusmatka on kisa!");
                                     Console.Write("Anna kalastuskisan nimi:");
                                     String competitionName = Console.ReadLine();
@@ -80,10 +77,10 @@ namespace Fishingtracker1
                                     competition = true;
 
                                 }
-                       
-                               else if (vastaus == "Ei")
+
+                                else if (vastaus == "Ei")
                                 {
-                                    
+
                                     Console.WriteLine("Kalastusmatka ei ole kilpailu");
                                     competition = false;
                                     valinta = false;
@@ -105,7 +102,7 @@ namespace Fishingtracker1
                             kalastusmatka.Add(new Fishingtrip(place, fisherName, competition, startTime));
 
                             Console.WriteLine("Uusi kalastusmatka aloitettu!\n");
-                           Console.WriteLine("Seuraavaksi voit aloittaa kalastussuorituksen");
+                            Console.WriteLine("Seuraavaksi voit aloittaa kalastussuorituksen");
 
                             // Tulostetaan valikko kalastussuoritukselle
                             Mainoperations.TulostaSuoritusValikko();
@@ -113,7 +110,7 @@ namespace Fishingtracker1
 
 
                         case "s": // aloiteaan kalastussuoritus, kysytään käyttäjältä vieheen tiedot, kalastustapa ja merkitään suorituksen aloitusaika
-                             
+
 
                             Console.Write("Anna vieheen nimi: ");
                             String lureName = Console.ReadLine();
@@ -124,7 +121,7 @@ namespace Fishingtracker1
                             Console.Write(" \n");
                             DateTime sessionStartTime = DateTime.Now;
                             string format2 = "d.M.yyyy HH:mm";
-                        Console.WriteLine($"Päivämäärä ja aika: { sessionStartTime.ToString(format2) }\n");
+                            Console.WriteLine($"Päivämäärä ja aika: { sessionStartTime.ToString(format2) }\n");
 
 
                             // Luodaan ilmentymä ja tallennetaan tiedot listaan
@@ -153,22 +150,22 @@ namespace Fishingtracker1
                                         Console.Write("Kalan pituus (cm): ");
                                         int lenght = int.Parse(Console.ReadLine());
                                         DateTime fishtime = DateTime.Now;
-                                     //  fishtime.ToString("dd.MM.yyyy hh:mm");
-                               
-                                        using (var kalalaji = new NpgsqlCommand("INSERT INTO fish(species) VALUES ('" + fish + "') ", conn))
-                                        using (var painojapituus = new NpgsqlCommand(" INSERT INTO catch (fish_weight , fish_lenght ) VALUES('" + weight + "', '" + lenght + "')"  , conn)) 
-                                        {
-                                            await kalalaji.ExecuteNonQueryAsync();
-                                            await painojapituus.ExecuteNonQueryAsync();
-                                        }
+                                        //  fishtime.ToString("dd.MM.yyyy hh:mm");
+
+                                        //using (var kalalaji = new NpgsqlCommand("INSERT INTO fish(species) VALUES ('" + fish + "') ", conn))
+                                        //using (var painojapituus = new NpgsqlCommand(" INSERT INTO catch (fish_weight , fish_lenght ) VALUES('" + weight + "', '" + lenght + "')", conn))
+                                        //{
+                                        //    await kalalaji.ExecuteNonQueryAsync();
+                                        //    await painojapituus.ExecuteNonQueryAsync();
+                                        //}
                                         saaliit.Add(new Catch(fish, weight, lenght, fishtime));
 
                                         Console.WriteLine($"Saalis {fish}, {weight}, {lenght} lisätty suoritukselle\n");
-                                    break;
+                                        break;
 
                                     case "0": // Lopetetaan kalastussuoritus ja lisätään lopetusaika
-                                        
-                                       kalastussuoritus[0].SetSessionEndTime(DateTime.Now);
+
+                                        kalastussuoritus[0].SetSessionEndTime(DateTime.Now);
                                         Console.WriteLine($"Kalastus suoritus lopetettiin kello {kalastussuoritus[0].GetSessionEndTime()} ");
 
                                         Mainoperations.TulostaMatkaKeskenValikko();
@@ -176,7 +173,7 @@ namespace Fishingtracker1
                                         break;
                                 }
                             }
-                            
+
                             break;
                         case "a": // Analysoidaan kalastusta ja tulostetaan historia tietoja
                                   // Lasketaan tietyllä vieheellä saadut kalat.
@@ -207,13 +204,13 @@ namespace Fishingtracker1
 
                                     case "2": // Kalastusmatkan kesto
                                         TimeSpan fishingTime = (kalastusmatka[0].GetStartTime() - DateTime.Now);
-                                        fishingTime.ToString("dd.MM.yyyy hh:mm");
+                                        Console.WriteLine(fishingTime.ToString()); 
                                         jatkaanalyysia = false;
                                         break;
                                 }
                             }
                             break;
-                            
+
 
 
                         case "1":
