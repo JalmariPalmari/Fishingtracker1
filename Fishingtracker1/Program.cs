@@ -9,7 +9,7 @@ namespace Fishingtracker1
         static async System.Threading.Tasks.Task Main(string[] args)
         {
             //// Luodaan tietokantayhteys
-            //string connection = "Host=localhost;Username=postgres;Password=Postg09?;Database=fishing_tracker";
+            //string connection = "Host=localhost;Username=postgres;Password=;Database=fishing_tracker";
 
             //var conn = new NpgsqlConnection(connection);
             //conn.Open();
