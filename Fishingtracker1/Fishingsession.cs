@@ -60,17 +60,6 @@ namespace Fishingtracker1
         {
             return _sessionCount;
         }
-
-    //    public void SetSession(Fishingsession session)
-     //   {
-    //        kalastussuoritus.Add(session);
-    //    }
-
-     //   public Fishingsession GetSession()
-      //  {
-      //      return kalastussuoritus[0];
-       // }
        
-
     }
 }

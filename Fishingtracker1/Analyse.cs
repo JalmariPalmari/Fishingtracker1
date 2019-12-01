@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Fishingtracker1
 {
-    class Analyse : Program
+    class Analyse
     {
-        public static void TripFishingTime()
+        public void TripFishingTime()
         {
           
         }
