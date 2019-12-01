@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace Fishingtracker1
 {
@@ -47,12 +51,11 @@ namespace Fishingtracker1
                 while (jatkaohjelmaa)
                 {
                     Console.WriteLine("Valitse toiminto");
-                    string komento = Console.ReadLine();
+                    string komento = Console.ReadLine();   
 
                     switch (komento)
                     {
                         case "m": // aloitetaan kalastus ja lisätään kalastusmatkan tiedot
-
                             Console.WriteLine("Anna kalastusmatkan tiedot");
                             Console.WriteLine("-----------------------------------------------");
                             Console.Write("Paikka: ");
@@ -60,47 +63,56 @@ namespace Fishingtracker1
                             Console.Write("Kalastajan nimi: ");
                             String fisherName = Console.ReadLine();
 
+                          
+
                             bool competition = false;
                             bool valinta = true;
-                            do
+                            do // Ohjelma kysyy käyttäjältä onko kalastusmatka kisa? Ohjelma tarkistaa syötetyn arvon, että se on oikein.
                             {
-                                // Ohjelma kysyy käyttäjältä onko kalastusmatka kisa? Ohjelma tarkistaa syötetyn arvon, että se on oikein.
-                                Console.Write("Onko kalastusmatka kisa? Kyllä/Ei: ");
+                                Console.Write("Onko kalastusmatka kisa? K/E: ");
                                 String vastaus = Console.ReadLine();
-                                if (vastaus == "Kyllä")
-                                {
 
-                                    Console.WriteLine("Kalastusmatka on kisa!");
+                                if (vastaus == "K") // Lisätään listaan ja tallennetaan myös kisannimi
+                                {
                                     Console.Write("Anna kalastuskisan nimi:");
                                     String competitionName = Console.ReadLine();
                                     valinta = false;
                                     competition = true;
+                                
+                                    // Lisätään kalastusmatkan tiedot listaan
+                                    kalastusmatka.Add(new Fishingtrip(place, fisherName, competition));
+                                    kalastusmatka[0].SetCompetitionName(competitionName);
 
                                 }
-
-                                else if (vastaus == "Ei")
+                                else if (vastaus == "E") // Lisätään listaan, mutta ei tallenneta kisan nimeä
                                 {
-
                                     Console.WriteLine("Kalastusmatka ei ole kilpailu");
                                     competition = false;
                                     valinta = false;
+                                    kalastusmatka.Add(new Fishingtrip(place, fisherName, competition));
                                 }
                                 else
                                 {
                                     Console.WriteLine("Väärä arvo");
                                 }
-
                             } while (valinta);
 
                             // Lisätään matkanaloitusaika aikaleimalla
                             DateTime startTime = DateTime.Now;
                             string format1 = "d.M.yyyy HH:mm";
+                            kalastusmatka[0].SetTripStartTime(startTime);
+
+                            Console.Clear();
+
+                            // Tulostetaan kalastusmatkan tiedot
+                            Console.WriteLine($"Paikka: {kalastusmatka[0].GetPlace()}");
+                            Console.WriteLine($"Kalastaja: {kalastusmatka[0].GetFisherName()}");
+                            if (competition) // Jos kalastusmatka on kisa, tulostetaan kisan nimi
+                            {
+                                Console.WriteLine($"Kalastuskisan nimi{kalastusmatka[0].GetCompetitionName()}");
+                            }
                             Console.WriteLine($"Päivämäärä ja aika: { startTime.ToString(format1) }");
                             Console.WriteLine("-----------------------------------------------\n");
-
-                            // Lisätään kalastusmatkan tiedot listaan ja tulostetaan
-                            kalastusmatka.Add(new Fishingtrip(place, fisherName, competition, startTime));
-
                             Console.WriteLine("Uusi kalastusmatka aloitettu!\n");
                             Console.WriteLine("Seuraavaksi voit aloittaa kalastussuorituksen");
 
@@ -121,12 +133,15 @@ namespace Fishingtracker1
                             Console.Write(" \n");
                             DateTime sessionStartTime = DateTime.Now;
                             string format2 = "d.M.yyyy HH:mm";
-                            Console.WriteLine($"Päivämäärä ja aika: { sessionStartTime.ToString(format2) }\n");
 
-
+                            Console.Clear();
                             // Luodaan ilmentymä ja tallennetaan tiedot listaan
                             kalastussuoritus.Add(new Fishingsession(lureName, lureType, fishingStyle, sessionStartTime));
-
+                            // Tulostetaan suorituksen tiedot
+                            Console.WriteLine($"Vieheen nimi: {kalastussuoritus[0].GetLureName()}");
+                            Console.WriteLine($"Vieheen tyyppi: {kalastussuoritus[0].GetLureType()}");
+                            Console.WriteLine($"Kalastustapa: {kalastussuoritus[0].GetFishingStyle()}");
+                            Console.WriteLine($"Päivämäärä ja aika: { sessionStartTime.ToString(format2) }\n");
                             // Tallannetaan tiedot tietokantaan, kun tarvittavat tekniikat on opittu
 
                             Console.WriteLine("Kalastus suoritus aloitettu\n");
@@ -160,7 +175,7 @@ namespace Fishingtracker1
                                         //}
                                         saaliit.Add(new Catch(fish, weight, lenght, fishtime));
 
-                                        Console.WriteLine($"Saalis {fish}, {weight}, {lenght} lisätty suoritukselle\n");
+                                        Console.WriteLine($"Saalis {fish} , {weight} Kg , {lenght} Cm lisätty suoritukselle\n");
                                         break;
 
                                     case "0": // Lopetetaan kalastussuoritus ja lisätään lopetusaika
@@ -185,7 +200,7 @@ namespace Fishingtracker1
                                 string valitse = Console.ReadLine();
                                 switch (valitse)
                                 {
-                                    case "1": //Tulostaa kalastusmatkalla saadut kalat ja näyttää yhteispainon.
+                                    case "1": //Tulostaa kalastusmatkalla saadut kalat ja näytetään kalojen yhteispaino.
                                         foreach (Catch item in saaliit)
                                         {
                                             Console.Write($"{item.GetFishSpecies()} ");
@@ -195,8 +210,8 @@ namespace Fishingtracker1
 
 
                                         }
-                                        Console.WriteLine($"{saaliit[0].GetFishCount()} kalaa saatu tällä kalastusmatkalla");
-                                        Console.WriteLine($"{saaliit[0].GetWeightSum()}");
+                                        Console.WriteLine($"Kaloja saatu tällä kalastusmatkalla: {saaliit[0].GetFishCount()} ");
+                                        Console.WriteLine($"Kalojen yhteispaino: {saaliit[0].GetWeightSum()} ");
                                         Console.WriteLine();
 
 
@@ -211,8 +226,6 @@ namespace Fishingtracker1
                             }
                             break;
 
-
-
                         case "1":
                             kalastusmatka[0].SetTripEndTime(DateTime.Now);
                             Console.WriteLine($"Kalastusmatka lopetettiin aikaan: {kalastusmatka[0].GetTripEndTime()} ");
@@ -223,6 +236,9 @@ namespace Fishingtracker1
                             jatkaohjelmaa = false;
 
                             break;
+
+                        default: Console.WriteLine("Valitsit väärin");
+                                break;
 
                     }
                 }

@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace Fishingtracker1
 {
     class Fishingsession
     {
-       // List<Fishingsession> kalastussuoritus = new List<Fishingsession>();
-
         private String _lureName;
         private String _lureType;
         private String _fishingStyle;
         private int _sessionCount;
 
-
         private DateTime _sessionStartTime;
         private DateTime _sessionEndTime;
 
+       // Konstruktori
         public Fishingsession(string lureName, string lureType, string fishingStyle, DateTime sessionStartTime)
         {
             _lureName = lureName;
@@ -26,6 +26,8 @@ namespace Fishingtracker1
 
             _sessionCount++;
         }
+
+        // Metodit
         public string GetLureName()
         {
             return _lureName;
