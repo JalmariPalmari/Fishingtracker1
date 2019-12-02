@@ -13,6 +13,7 @@ namespace Fishingtracker1
 
         static async System.Threading.Tasks.Task Main(string[] args)
         {
+           
             // Luodaan tietokantayhteys
             string connection = "Host=localhost;Username=postgres;Password=postgres;Database=fishing_tracker";
 
@@ -38,7 +39,7 @@ namespace Fishingtracker1
             // Valikon toiminnallisuuksien luominen applikaatiolle
             {
                 // Listat tietojen tallentamista varten
-
+                
                 List<Fishingsession> kalastussuoritus = new List<Fishingsession>();
                 List<Fishingtrip> kalastusmatka = new List<Fishingtrip>();
                 List<Catch> saaliit = new List<Catch>();
@@ -146,7 +147,10 @@ namespace Fishingtracker1
                             Console.WriteLine("Kalastus suoritus aloitettu\n");
 
                             // Kalastus suoritukselle voidaan luoda useita saaliita ja suoritus päätetään käyttäjän niin valitessa ja asettamalla lopetusaika.
-
+                            int lenght;
+                            int weight;
+                            DateTime fishtime;
+                            int kalalajinvalinta;
                             bool jatkasessiota = true;
                             while (jatkasessiota)
                             {
@@ -155,29 +159,69 @@ namespace Fishingtracker1
                                 string valitse = Console.ReadLine();
                                 switch (valitse)
                                 {
-                                    case "1": // Käyttäjältä kysytään saaliin tiedot, kalalaji, paino ja pituus
-                                        Console.WriteLine("Anna saalin tiedot\n");
-                                        Console.Write("Kalalaji: ");
-                                        string fish = Console.ReadLine();
-                                        Console.Write("Kalan paino (kg): ");
-                                        int weight = int.Parse(Console.ReadLine());
-                                        Console.Write("Kalan pituus (cm): ");
-                                        int lenght = int.Parse(Console.ReadLine());
-                                        DateTime fishtime = DateTime.Now;
-                                        fishtime.ToString("dd.MM.yyyy hh:mm");
-
-                              
-                                
-                                        using (var kalalaji = new NpgsqlCommand ("insert into fish(species) values ('" + fish + "') ", conn))
-                                        using (var painojapituus = new NpgsqlCommand (" insert into catch (fish_weight , fish_lenght ) values('" + weight + "', '" + lenght + "')", conn))
+                                     
+                                    case "1": // Käyttäjältä kysytään saaliin tiedot, kalalaji, paino ja pituus 
+                                        do
                                         {
-                                           await kalalaji.ExecuteNonQueryAsync();
-                                            await painojapituus.ExecuteNonQueryAsync();
+                                            Console.WriteLine("Anna saalin tiedot\n");
+                                            Console.Write("Kalalaji: Hauki[1], Kuha[2], Ahven[3] ");
+                                            kalalajinvalinta = int.Parse(Console.ReadLine());
+                                        } while (kalalajinvalinta != (1) && kalalajinvalinta != (2) && kalalajinvalinta != (3));
+                                        if (kalalajinvalinta == 1)
+                                        {
+                                            Console.Write("Kalan paino (kg): ");
+                                            weight = int.Parse(Console.ReadLine());
+                                            Console.Write("Kalan pituus (cm): ");
+                                            lenght = int.Parse(Console.ReadLine());
+                                            fishtime = DateTime.Now;
+                                            fishtime.ToString("dd.MM.yyyy hh:mm");
+                                            using (var kala = new NpgsqlCommand("insert into catch(fk_fish, fish_weight, fish_lenght) values ('" + kalalajinvalinta + "','" + weight + "', '" + lenght + "') ", conn))
+
+                                            {
+                                                await kala.ExecuteNonQueryAsync();
+                                            }
+                                           saaliit.Add(new Catch(kalalajinvalinta, weight, lenght, fishtime));
+                                            Console.WriteLine($"Saalis {kalalajinvalinta} , {weight} Kg , {lenght} Cm lisätty suoritukselle\n");
                                         }
+                                        if (kalalajinvalinta == 2)
+                                        {
+                                            Console.Write("Kalan paino (kg): ");
+                                            weight = int.Parse(Console.ReadLine());
+                                            Console.Write("Kalan pituus (cm): ");
+                                            lenght = int.Parse(Console.ReadLine());
+                                            fishtime = DateTime.Now;
+                                            fishtime.ToString("dd.MM.yyyy hh:mm");
+                                            using (var kala = new NpgsqlCommand("insert into catch(fk_fish, fish_weight, fish_lenght) values ('" + kalalajinvalinta + "','" + weight + "', '" + lenght + "') ", conn))
 
-                                        saaliit.Add(new Catch(fish, weight, lenght, fishtime));
+                                            {
+                                                await kala.ExecuteNonQueryAsync();
+                                            }
+                                            saaliit.Add(new Catch(kalalajinvalinta, weight, lenght, fishtime));
+                                            Console.WriteLine($"Saalis {kalalajinvalinta} , {weight} Kg , {lenght} Cm lisätty suoritukselle\n");
 
-                                        Console.WriteLine($"Saalis {fish} , {weight} Kg , {lenght} Cm lisätty suoritukselle\n");
+                                        }
+                                        if (kalalajinvalinta == 3)
+                                        {
+                                            Console.Write("Kalan paino (kg): ");
+                                            weight = int.Parse(Console.ReadLine());
+                                            Console.Write("Kalan pituus (cm): ");
+                                            lenght = int.Parse(Console.ReadLine());
+                                            fishtime = DateTime.Now;
+                                            fishtime.ToString("dd.MM.yyyy hh:mm");
+                                            using (var kala = new NpgsqlCommand("insert into catch(fk_fish, fish_weight, fish_lenght) values ('" + kalalajinvalinta + "','" + weight + "', '" + lenght + "' )", conn))
+
+                                            {
+                                                await kala.ExecuteNonQueryAsync();
+                                            }
+                                            saaliit.Add(new Catch(kalalajinvalinta, weight, lenght, fishtime));
+                                            Console.WriteLine($"Saalis {kalalajinvalinta} , {weight} Kg , {lenght} Cm lisätty suoritukselle\n");
+                                        }
+                                        
+
+                                        //  string fish = Console.ReadLine();
+  
+
+                             
                                         break;
 
                                     case "0": // Lopetetaan kalastussuoritus ja lisätään lopetusaika
@@ -218,20 +262,20 @@ namespace Fishingtracker1
 
                                         Console.WriteLine("Kalalaji ja kalojen koot tulostetaan myös tietokannasta");
 
-                                        NpgsqlCommand kalalaji = new NpgsqlCommand("SELECT species FROM fish", conn);
-                                        NpgsqlDataReader laji = kalalaji.ExecuteReader();
-                                        while (laji.Read())
-                                            Console.WriteLine("{0}", laji[0]);
+                                        //NpgsqlCommand kalat = new NpgsqlCommand("SELECT fish, fish_weight, fish_lenght FROM catch INNER JOIN fish ON catch.fk_fish = fish.id_fish", conn);
+                                        //NpgsqlDataReader haekalat = kalat.ExecuteReader();
+                                        //while (haekalat.Read())
+
+                                        //    Console.WriteLine("{0}, {1}, {2}", haekalat[0].ToString(), haekalat[1], haekalat[2]);
+                                        //conn.Close();
+
+                                        NpgsqlCommand kalat = new NpgsqlCommand("SELECT fish_weight, fish_lenght FROM catch INNER JOIN fish ON catch.fk_fish = fish.id_fish", conn);
+                                        NpgsqlDataReader haekalat = kalat.ExecuteReader();
+                                        while (haekalat.Read())
+                                           
+                                            Console.WriteLine("{0}, {1}", haekalat[0],haekalat[1]);
                                         conn.Close();
-
-                                        conn.Open();
-                                        NpgsqlCommand painojapituus = new NpgsqlCommand("SELECT fish_weight, fish_lenght FROM catch", conn);
-                                            NpgsqlDataReader pjap = painojapituus.ExecuteReader();
-                                        while (pjap.Read())
-                                                Console.Write("{0} {1} ", pjap[0],pjap[1]);
-                                        conn.Close();
-
-
+                                
                                         break;
 
                                     case "2": // Kalastusmatkan kesto
@@ -243,13 +287,13 @@ namespace Fishingtracker1
                             }
                             break;
 
-                        case "1":
+                        case "1": // Lopetetaan kalastusmatka ja tulostetaan aika.
                             kalastusmatka[0].SetTripEndTime(DateTime.Now);
                             Console.WriteLine($"Kalastusmatka lopetettiin aikaan: {kalastusmatka[0].GetTripEndTime()} ");
 
                             break;
 
-                        case "q":
+                        case "q": // ohjelma lopetetaan
                             jatkaohjelmaa = false;
 
                             break;

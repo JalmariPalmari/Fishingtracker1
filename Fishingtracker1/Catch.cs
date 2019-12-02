@@ -9,23 +9,23 @@ namespace Fishingtracker1
    
     class Catch
     {
-        private string _fish;
+        private int _fish;
         private int _weight;
         private int _lenght;
        private static int _fishCount;
         
 
      static private List<int> kgsumma = new List<int>();
-        public Catch(string fish, int weight, int lenght, DateTime fishtime)
+        public Catch(int kalalinvalinta, int weight, int lenght, DateTime fishtime)
         {
 
-            _fish = fish;
+            _fish = kalalinvalinta;
             _lenght = lenght;
             _weight = weight;
             kgsumma.Add(weight);
             _fishCount++;
         }
-        public string GetFishSpecies()
+        public int GetFishSpecies()
         {
             return _fish;
         }
