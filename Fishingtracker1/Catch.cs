@@ -9,34 +9,23 @@ namespace Fishingtracker1
    
     class Catch
     {
-       // List<Catch> saaliit = new List<Catch>();
-
-        private string _fish;
+        private int _fish;
         private int _weight;
         private int _lenght;
-        static int _fishCount;
+       private static int _fishCount;
         
 
      static private List<int> kgsumma = new List<int>();
-    private int _kgSumma = kgsumma.Sum();
-        public Catch(string fish, int weight, int lenght, DateTime fishtime) // ei toimi
+        public Catch(int kalalinvalinta, int weight, int lenght, DateTime fishtime)
         {
 
-            _fish = fish;
-
-            if (weight > 0 && weight < 50)
-            {
-                _weight = weight;
-            }
-            else
-            {
-                Console.WriteLine("Invalid weight");
-            }
-            kgsumma.Add(_weight);
+            _fish = kalalinvalinta;
             _lenght = lenght;
+            _weight = weight;
+            kgsumma.Add(weight);
             _fishCount++;
         }
-        public string GetFishSpecies()
+        public int GetFishSpecies()
         {
             return _fish;
         }
@@ -54,19 +43,8 @@ namespace Fishingtracker1
         }
         public int GetWeightSum()
         {
-            return _kgSumma;
+            return kgsumma.Sum();
         }
-       
-      
-     //   public void SetCatch(Catch sessionCatch)
-      //    {
-     //         saaliit.Add(sessionCatch);
-     //    }
-        
-    //   public Catch GetCatch()
-    //   {
-     //        return saaliit[0];
-     //     }
 
     }
 }

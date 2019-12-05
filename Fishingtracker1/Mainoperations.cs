@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace Fishingtracker1
 {
     class Mainoperations
     {
-        public static void TulostaValikko() // Metodilla tulostetaan ohjelman  päävalikko
+        public static void TulostaValikko() // Metodilla tulostetaan ohjelman aloitusvalikko
         {
             {
                 Console.WriteLine("\n\n-- Valitse toiminto --\n\n");
                 Console.WriteLine("[m] Aloita kalastusmatka \n");
-                Console.WriteLine("[s] Aloita kalastussuoritus\n");
-                Console.WriteLine("[a] Analysoi kalastusta\n");
-                Console.WriteLine("[l] Lopeta kalastusmatka\n");
+               // Console.WriteLine("[s] Aloita kalastussuoritus\n");
+              //  Console.WriteLine("[a] Analysoi kalastusta\n");
+             //   Console.WriteLine("[l] Lopeta kalastusmatka\n");
                 Console.WriteLine("[q] Sulje\n\n");
             }
 
@@ -24,7 +26,7 @@ namespace Fishingtracker1
             {
                 Console.WriteLine("\n\n-- Valitse toiminto --\n\n");
                 Console.WriteLine("[s] Aloita kalastussuoritus\n");
-                Console.WriteLine("[a] Analysoi kalastusta\n");
+             //   Console.WriteLine("[a] Analysoi kalastusta\n");
                 Console.WriteLine("[q] Sulje\n\n");
 
             }

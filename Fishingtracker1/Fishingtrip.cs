@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace Fishingtracker1
 {
-
-    // Geneerinen lista?
     class Fishingtrip
     {
-       // private List<Fishingtrip> kalastusmatka = new List<Fishingtrip>();
-        
-
-
         private string _place;
         private bool _competition;
         private string _competitionName;
@@ -20,11 +16,10 @@ namespace Fishingtracker1
         private string _fisherName;
 
 
-        public Fishingtrip(string place, string fisherName, bool competition, DateTime startTime)
+        public Fishingtrip(string place, string fisherName, bool competition)
         {
             _place = place;
             _competition = competition;
-            _startTime = startTime;
             _fisherName = fisherName;
 
 
@@ -62,8 +57,12 @@ namespace Fishingtracker1
         {
             _endTime = endTime;
         }
-    
-     
+        public void SetTripStartTime(DateTime startTime)
+        {
+            _startTime = startTime;
         }
+
+
+    }
     }
 
