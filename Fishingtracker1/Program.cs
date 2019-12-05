@@ -13,13 +13,108 @@ namespace Fishingtracker1
 
         static async System.Threading.Tasks.Task Main(string[] args)
         {
-           
+
+            // * START CHANGES
+            // Request of connection parameters to be placed in a new class
+            // that manages the connection errors to the database
+            // and saves new connection parameters into a text file
+
+            // Setting the Default parametrers
+            string dbusername = "postgres";
+            string dbpwd = "postgres";
+            string dbname = "fishing_tracker";
+
+            
+            // Creating disposable variables
+            string dbusernew = dbusername;
+            string dbpwdnew = dbpwd;
+            string dbnamenew = dbname;
+            string userchoice = "";
+            bool correct = false;
+
+            
+            // There have to be a chance to modify the connection parameters
+            // Requesting Connection Parameters to the user
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("This console application requires a connection to his postgresql database.");
+                Console.WriteLine("Default parametes will be used, otherwise.");
+                Console.Write("\n Do you want to set new connection parameters (username, password, databasename) ? [K / E]:");
+                userchoice = Console.ReadLine();
+                
+                userchoice = userchoice.ToUpperInvariant();
+
+                if (userchoice == "K")
+                {
+                    Console.Clear();
+              
+                    Console.WriteLine("Please provide new parameters to connect to the postgresql database.");
+                    Console.Write("Database username [{0}]: ", dbusernew);
+                    dbusernew = Console.ReadLine();
+                    Console.Write("Database password [{0}]: ", dbpwdnew);
+                    dbpwdnew = Console.ReadLine();
+                    Console.Write("Database name [{0}]:", dbnamenew);
+                    dbnamenew = Console.ReadLine();
+
+                    Console.Write("Please check the correctness of the parameters that you gave.\n" +
+                        "The connection string is: Host=localhost;Username={0};Password={1};Database={2}; !\n" +
+                        "Are you sure to proceed [K / E]: ", dbusernew, dbpwdnew, dbnamenew);
+                    userchoice = Console.ReadLine();
+                    userchoice = userchoice.ToUpperInvariant();
+
+                    if (userchoice == "K")
+                    {
+                        correct = true;
+                    }
+                    else
+                    {
+                        // It's important to get 
+                        Console.WriteLine("\n Please retry to provide the parameters. \n Press any key to retry.");
+                        Console.ReadKey();
+                    }
+                }
+                else if (userchoice == "E")
+                {
+                    Console.WriteLine("\n Default parameters will be used to access to the local postgresql database.");
+                    dbusernew = dbusername;
+                    dbpwdnew = dbpwd;
+                    dbnamenew = dbname;
+                    correct = true;
+                    // Print to screen for debug
+                    Console.WriteLine("The connection string is: Host=localhost;Username=" + dbusernew + ";Password=" + dbpwdnew + "; Database=" + dbnamenew + "; !");
+
+                }
+                // Repeat the cicle if input differet from "K" or "E" 
+                                 
+            } while (!correct);
+
+            
+
             // Luodaan tietokantayhteys
-            string connection = "Host=localhost;Username=postgres;Password=postgres;Database=fishing_tracker";
+          
+            string connection = "Host=localhost;Username="+ dbusernew +";Password="+ dbpwdnew + "; Database="+ dbnamenew +";";
+
+            // ** END CHANGES
+
+            // Previous code:
+            // string connection = "Host=localhost;Username=postgres;Password=postgres;Database=fishing_tracker";
+
+
+            // It would be safe to catch errors in connection to the database
+            // and exit gracefully using a try {} catch {}
+            // reference here: https://www.npgsql.org/doc/
+            // or a "using" statement
+            // ref: 
+            // https://social.msdn.microsoft.com/Forums/sqlserver/en-US/cd3f4ea4-f7fd-4f52-8507-bc4a578e5607/c-exception-when-the-database-is-downnot-able-to-connect?forum=csharpgeneral
+            // https://www.c-sharpcorner.com/article/the-using-statement-in-C-Sharp/
 
             var conn = new NpgsqlConnection(connection);
+
             conn.Open();
-            conn.Close();
+            conn.Close(); // why this closure of the connection?
+
             // Valikon toiminnallisuuksien luominen applikaatiolle
             {
                 // Listat tietojen tallentamista varten
