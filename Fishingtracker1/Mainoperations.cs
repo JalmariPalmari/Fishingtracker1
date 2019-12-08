@@ -13,10 +13,7 @@ namespace Fishingtracker1
             {
                 Console.WriteLine("\n\n-- Valitse toiminto --\n\n");
                 Console.WriteLine("[m] Aloita kalastusmatka \n");
-               // Console.WriteLine("[s] Aloita kalastussuoritus\n");
-              //  Console.WriteLine("[a] Analysoi kalastusta\n");
-             //   Console.WriteLine("[l] Lopeta kalastusmatka\n");
-                Console.WriteLine("[q] Sulje\n\n");
+                Console.WriteLine("[q] Sulje\n");
             }
 
         }
@@ -26,7 +23,6 @@ namespace Fishingtracker1
             {
                 Console.WriteLine("\n\n-- Valitse toiminto --\n\n");
                 Console.WriteLine("[s] Aloita kalastussuoritus\n");
-             //   Console.WriteLine("[a] Analysoi kalastusta\n");
                 Console.WriteLine("[q] Sulje\n\n");
 
             }
