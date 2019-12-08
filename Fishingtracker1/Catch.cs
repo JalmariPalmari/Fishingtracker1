@@ -18,7 +18,7 @@ namespace Fishingtracker1
        private static int _fishCount;
 
         // lista kilogrammojen tallentamista varten.
-        private List<int> kgsumma = new List<int>();
+        private static List<int> kgsumma = new List<int>();
         public Catch(int kalalajinvalinta, string fish, int weight, int lenght, NpgsqlDateTime fishtime)
         {
 
