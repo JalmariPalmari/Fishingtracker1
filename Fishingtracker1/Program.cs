@@ -19,7 +19,7 @@ namespace Fishingtracker1
                 // Listat tietojen tallentamista varten  
                 List<Fishingsession> kalastussuoritus = new List<Fishingsession>();
                 List<Fishingtrip> kalastusmatka = new List<Fishingtrip>();
-                List<Catch> saaliit = new List<Catch>();
+                List<Catch> Catch = new List<Catch>();
 
                 // Tulostetaan valikko
                 Mainoperations.TulostaValikko();
@@ -182,7 +182,7 @@ namespace Fishingtracker1
                                         Catch uusisaalis = new Catch(kalalajinvalinta, fish , weight, lenght, fishtime);
 
                                         // Lisätään kala listaan ja tulostetaan
-                                        saaliit.Add(uusisaalis);
+                                        Catch.Add(uusisaalis);
                                         Console.WriteLine($"{fish} , {weight} Kg , {lenght} Cm , saalistusaika {fishtime}");
                                         Console.WriteLine("Lisätty suoritukselle\n");
 
@@ -219,7 +219,7 @@ namespace Fishingtracker1
                                 {
                                     case "1": //Tulostaa kalastusmatkalla saadut kalat ja näytetään kalojen yhteispaino.
                                         Console.Clear();
-                                        foreach (Catch item in saaliit)
+                                        foreach (Catch item in Catch)
                                         {
                                             Console.Write($"{item.GetFishSpecies()} ");
                                             Console.Write($"{item.GetFishWeight()} Kg ");
@@ -227,10 +227,10 @@ namespace Fishingtracker1
                                             Console.WriteLine($"Saalistusaika: {item.GetFishTime()} ");
                                             Console.WriteLine("");
                                         }
-                                        Console.WriteLine($"Kaloja saatu tällä kalastusmatkalla: {saaliit[0].GetFishCount()} ");
-                                        Console.WriteLine($"Kalojen yhteispaino: {saaliit[0].GetWeightSum()} kiloa");
+                                        Console.WriteLine($"Kaloja saatu tällä kalastusmatkalla: {Catch[0].GetFishCount()} ");
+                                        Console.WriteLine($"Kalojen yhteispaino: {Catch[0].GetWeightSum()} kiloa");
                                         Console.WriteLine();
-
+                                        
                                         break;
                                     case "2": // Haetaan kaikki saadut kalat tietokannasta
                                         Console.Clear();
